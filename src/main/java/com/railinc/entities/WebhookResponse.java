@@ -1,4 +1,4 @@
-package hello;
+package com.railinc.entities;
 
 public class WebhookResponse {
     private final String speech;

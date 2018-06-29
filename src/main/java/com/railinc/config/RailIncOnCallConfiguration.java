@@ -1,13 +1,13 @@
-package hello;
+package com.railinc.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HelloWorldConfiguration {
+public class RailIncOnCallConfiguration {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HelloWorldConfiguration.class, args);
+		SpringApplication.run(RailIncOnCallConfiguration.class, args);
 	}
 
 }
