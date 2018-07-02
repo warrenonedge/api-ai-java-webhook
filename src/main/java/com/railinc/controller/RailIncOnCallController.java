@@ -48,6 +48,6 @@ public class RailIncOnCallController {
         
         String resultText = "The User on Call for " + readableDf.format(result) + " is " + onCall.getName(); 
 
-        return new WebhookResponse(resultText, whr.getSession());
+        return new WebhookResponse(resultText, whr.getSession()+ "/contexts/" + whr.getQueryResult().getIntent().getDisplayName());
     }
 }
