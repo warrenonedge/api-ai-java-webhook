@@ -16,6 +16,10 @@ public class Google {
     private Boolean expectUserResponse;
     @JsonProperty("richResponse")
     private RichResponse richResponse;
+    
+    public Google() {
+    	this.richResponse = new RichResponse();
+    }
 
     @JsonProperty("expectUserResponse")
     public Boolean getExpectUserResponse() {

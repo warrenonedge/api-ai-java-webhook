@@ -30,6 +30,7 @@ public class Payload {
     private Telegram telegram;
     
     public Payload(String text) {
+    	this.google = new Google();
     	this.google.setExpectUserResponse(true);
     	List<Item> simpleResponseList = new ArrayList<Item>();
     	simpleResponseList.add(new Item(new SimpleResponse(text)));
