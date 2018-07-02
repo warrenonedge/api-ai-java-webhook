@@ -1,5 +1,5 @@
 
-package com.railinc.entities.webhook;
+package com.railinc.entities.webhook.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

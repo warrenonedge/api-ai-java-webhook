@@ -1,6 +1,7 @@
 
-package com.railinc.entities.webhook;
+package com.railinc.entities.webhook.request;
 
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -9,18 +10,18 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
     "text"
 })
-public class FulfillmentMessage {
+public class Text {
 
     @JsonProperty("text")
-    private Text text;
+    private List<String> text = null;
 
     @JsonProperty("text")
-    public Text getText() {
+    public List<String> getText() {
         return text;
     }
 
     @JsonProperty("text")
-    public void setText(Text text) {
+    public void setText(List<String> text) {
         this.text = text;
     }
 

@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.railinc.entities.OnCall;
-import com.railinc.entities.webhook.Parameters;
-import com.railinc.entities.webhook.WebhookRequest;
-import com.railinc.entities.webhook.WebhookResponse;
+import com.railinc.entities.webhook.request.Parameters;
+import com.railinc.entities.webhook.request.WebhookRequest;
+import com.railinc.entities.webhook.response.WebhookResponse;
 import com.railinc.services.OnCallService;
 
 @Controller
@@ -46,8 +46,8 @@ public class RailIncOnCallController {
         
         DateFormat readableDf = new SimpleDateFormat("MMMM dd");
         
-        String resultText = "The User on Call for " + readableDf.format(result) + " is " + onCall.getName();
+        String resultText = "The User on Call for " + readableDf.format(result) + " is " + onCall.getName(); 
 
-        return new WebhookResponse(resultText,resultText);
+        return new WebhookResponse(resultText, whr.getSession());
     }
 }
