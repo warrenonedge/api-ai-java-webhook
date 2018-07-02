@@ -2,21 +2,22 @@ package com.railinc.entities;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+//import javax.persistence.Column;
+//import javax.persistence.Entity;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
+//import javax.persistence.Id;
 
-@Entity
+//@Entity
 public class OnCall {
 	
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id")
+	//@Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    //@Column(name="id")
     private Integer id;
 	private String name;
-	private Date oncall_date;
+	//@Column(name="ONCALL_DATE")
+	private String onCallDate;
 	public Integer getId() {
 		return id;
 	}
@@ -29,11 +30,17 @@ public class OnCall {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Date getOncall_date() {
-		return oncall_date;
+	
+	public String getOnCallDate() {
+		return onCallDate;
 	}
-	public void setOncall_date(Date oncall_date) {
-		this.oncall_date = oncall_date;
+	public void setOnCallDate(String onCallDate) {
+		this.onCallDate = onCallDate;
 	}
+	@Override
+	public String toString() {
+		return "OnCall [id=" + id + ", name=" + name + ", onCallDate=" + onCallDate + "]";
+	}
+
 
 }

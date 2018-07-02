@@ -3,6 +3,7 @@ package com.railinc.controller;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +33,20 @@ public class RailIncOnCallController {
         
         Parameters parms = whr.getQueryResult().getParameters();
         
-        DateFormat df = new SimpleDateFormat("YYYY-MM-DD");
-        Date result =  df.parse(parms.getDate());
+        Calendar iso8601Date = javax.xml.bind.DatatypeConverter.parseDateTime(parms.getDate());
         
-        OnCall onCall = onCallService.findByOnCall_Date(result);
+        DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
+        Date result =  iso8601Date.getTime();
         
-        DateFormat readableDf = new SimpleDateFormat("MMMM DD");
+        System.out.println(df.format(result));
         
-        String resultText = "The User on Call for" + readableDf.format(result) + "is " + onCall.getName();
+        OnCall onCall = onCallService.findByOnCallDate(df.format(result)).get(0);
+        
+        System.out.println(onCall);
+        
+        DateFormat readableDf = new SimpleDateFormat("MMMM dd");
+        
+        String resultText = "The User on Call for " + readableDf.format(result) + " is " + onCall.getName();
 
         return new WebhookResponse(resultText,resultText);
     }
