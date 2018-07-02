@@ -30,15 +30,10 @@ public class Payload {
     private Telegram telegram;
     
     public Payload(String text) {
-    	this.google.setExpectUserResponse(false);
+    	this.google.setExpectUserResponse(true);
     	List<Item> simpleResponseList = new ArrayList<Item>();
     	simpleResponseList.add(new Item(new SimpleResponse(text)));
     	this.google.getRichResponse().setItems(simpleResponseList);
-    	
-    	this.facebook.setText(text);
-    	this.slack.setText(text);
-    	this.kik.setText(text);
-    	this.telegram.setText(text);
     }
 
     @JsonProperty("google")

@@ -31,6 +31,10 @@ public class WebhookResponse {
     @JsonProperty("followupEventInput")
     private FollowupEventInput followupEventInput;
     
+    public WebhookResponse (String responseText) {
+    	this.fulfillmentText = responseText;
+    	this.payload = new Payload(responseText);
+    }
     
     public WebhookResponse (String responseText, String session) {
     	this.fulfillmentText = responseText;
