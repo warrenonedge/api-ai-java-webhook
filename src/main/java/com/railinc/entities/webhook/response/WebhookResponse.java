@@ -34,6 +34,7 @@ public class WebhookResponse {
     
     public WebhookResponse (String responseText, String session) {
     	this.fulfillmentText = responseText;
+    	this.payload = new Payload(responseText);
     	this.outputContexts = new ArrayList<OutputContext>();
     	this.outputContexts.add(new OutputContext(session));
     }
