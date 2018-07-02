@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* hello.HelloWorldConfiguration --server.port=$PORT
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.railinc.config.RailIncOnCallConfiguration --server.port=$PORT
