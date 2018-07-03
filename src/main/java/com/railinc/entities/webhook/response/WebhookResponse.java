@@ -40,14 +40,14 @@ public class WebhookResponse implements Serializable
     public WebhookResponse() {
     }
     
-    public WebhookResponse (String responseText) {
+    public WebhookResponse (String responseText, String responseSound) {
     	this.fulfillmentText = responseText;
-    	this.payload = new Payload(responseText);
+    	this.payload = new Payload(responseSound);
     }
     
-    public WebhookResponse (String responseText, String session) {
+    public WebhookResponse (String responseText, String responseSound, String session) {
     	this.fulfillmentText = responseText;
-    	this.payload = new Payload(responseText);
+    	this.payload = new Payload(responseSound);
     	this.outputContexts = new ArrayList<OutputContext>();
     	this.outputContexts.add(new OutputContext(session));
     }
