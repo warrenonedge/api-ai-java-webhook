@@ -68,7 +68,9 @@ public class RailIncOnCallController {
 	        resultText = (allOnCall.size() > 0) ? "Users on call:" : "";
 	        
 	        for (OnCall onCall : allOnCall) {
-	        	resultText += "\n" + onCall.getName() + "\t " + readableDf.format(df.parse(onCall.getOnCallDate())) + getDateSuffix(todaysDate.getDay());
+	        	Calendar cal = Calendar.getInstance();
+	        	cal.setTime(df.parse(onCall.getOnCallDate()));
+	        	resultText += "\n" + onCall.getName() + "\t " + readableDf.format(df.parse(onCall.getOnCallDate())) + getDateSuffix(cal.get(Calendar.DAY_OF_MONTH));
 	        }
 
         }
@@ -79,7 +81,9 @@ public class RailIncOnCallController {
 	        String tense = (result.after(todaysDate)) ? " is " : " was ";
 	        try {
     	        OnCall onCall = onCallService.findByOnCallDate(df.format(result)).get(0);
-    	        resultText = "The User on Call for " + readableDf.format(result) + getDateSuffix(todaysDate.getDay()) + tense + onCall.getName();
+    	        Calendar cal = Calendar.getInstance();
+	        	cal.setTime(result);
+    	        resultText = "The User on Call for " + readableDf.format(result) + getDateSuffix(cal.get(Calendar.DAY_OF_MONTH)) + tense + onCall.getName();
         	} catch (IndexOutOfBoundsException ex) {
         		resultText = "There is No User on Call";
         	}
@@ -87,7 +91,9 @@ public class RailIncOnCallController {
         else {
         	try {
     	        OnCall onCall = onCallService.findByOnCallDate(df.format(todaysDate)).get(0);
-    	        resultText = "The User on Call for " + readableDf.format(todaysDate) + getDateSuffix(todaysDate.getDay()) + " is " + onCall.getName();
+    	        Calendar cal = Calendar.getInstance();
+	        	cal.setTime(todaysDate);
+    	        resultText = "The User on Call for " + readableDf.format(todaysDate) + getDateSuffix(cal.get(Calendar.DAY_OF_MONTH)) + " is " + onCall.getName();
         	} catch (IndexOutOfBoundsException ex) {
         		resultText = "There is No User on Call";
         	}
@@ -98,18 +104,19 @@ public class RailIncOnCallController {
     
     
     public String getDateSuffix( int day) { 
-        switch (day) {
-            case 1: case 21: case 31:
-                   return ("st");
+    	System.out.println("day: " + day);
+    	switch (day) {
+        case 1: case 21: case 31:
+               return ("st");
 
-            case 2: case 22: 
-                   return ("nd");
+        case 2: case 22: 
+               return ("nd");
 
-            case 3: case 23:
-                   return ("rd");
+        case 3: case 23:
+               return ("rd");
 
-            default:
-                   return ("th");
-        }
+        default:
+               return ("th");
+    }
 }
 }
