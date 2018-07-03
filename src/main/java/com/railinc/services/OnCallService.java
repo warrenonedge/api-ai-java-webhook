@@ -50,7 +50,7 @@ public class OnCallService {
 	}
 	
 	private boolean isBetween(String startDate, String endDate, String checkDate) throws ParseException {
-        DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         Date convStartDate = df.parse(startDate);
         Date convEndDate = df.parse(endDate);

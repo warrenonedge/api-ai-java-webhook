@@ -1,28 +1,67 @@
 
 package com.railinc.entities.webhook.response;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "items"
-})
-public class RichResponse {
+public class RichResponse implements Serializable
+{
 
-    @JsonProperty("items")
-    private List<Item> items = null;
+    @SerializedName("items")
+    @Expose
+    private List<Item> items = new ArrayList<Item>();
+    private final static long serialVersionUID = -6332677382645302173L;
 
-    @JsonProperty("items")
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public RichResponse() {
+    }
+
+    /**
+     * 
+     * @param items
+     */
+    public RichResponse(List<Item> items) {
+        super();
+        this.items = items;
+    }
+
     public List<Item> getItems() {
         return items;
     }
 
-    @JsonProperty("items")
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("items", items).toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(items).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if ((other instanceof RichResponse) == false) {
+            return false;
+        }
+        RichResponse rhs = ((RichResponse) other);
+        return new EqualsBuilder().append(items, rhs.items).isEquals();
     }
 
 }

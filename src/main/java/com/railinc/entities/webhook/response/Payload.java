@@ -1,33 +1,30 @@
 
 package com.railinc.entities.webhook.response;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "google",
-    "facebook",
-    "slack",
-    "kik",
-    "telegram"
-})
-public class Payload {
+public class Payload implements Serializable
+{
 
-    @JsonProperty("google")
+    @SerializedName("google")
+    @Expose
     private Google google;
-    @JsonProperty("facebook")
-    private Facebook facebook;
-    @JsonProperty("slack")
-    private Slack slack;
-    @JsonProperty("kik")
-    private Kik kik;
-    @JsonProperty("telegram")
-    private Telegram telegram;
+    private final static long serialVersionUID = 8003446452369570619L;
+
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public Payload() {
+    }
     
     public Payload(String text) {
     	this.google = new Google();
@@ -37,54 +34,43 @@ public class Payload {
     	this.google.getRichResponse().setItems(simpleResponseList);
     }
 
-    @JsonProperty("google")
+    /**
+     * 
+     * @param google
+     */
+    public Payload(Google google) {
+        super();
+        this.google = google;
+    }
+
     public Google getGoogle() {
         return google;
     }
 
-    @JsonProperty("google")
     public void setGoogle(Google google) {
         this.google = google;
     }
 
-    @JsonProperty("facebook")
-    public Facebook getFacebook() {
-        return facebook;
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("google", google).toString();
     }
 
-    @JsonProperty("facebook")
-    public void setFacebook(Facebook facebook) {
-        this.facebook = facebook;
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(google).toHashCode();
     }
 
-    @JsonProperty("slack")
-    public Slack getSlack() {
-        return slack;
-    }
-
-    @JsonProperty("slack")
-    public void setSlack(Slack slack) {
-        this.slack = slack;
-    }
-
-    @JsonProperty("kik")
-    public Kik getKik() {
-        return kik;
-    }
-
-    @JsonProperty("kik")
-    public void setKik(Kik kik) {
-        this.kik = kik;
-    }
-
-    @JsonProperty("telegram")
-    public Telegram getTelegram() {
-        return telegram;
-    }
-
-    @JsonProperty("telegram")
-    public void setTelegram(Telegram telegram) {
-        this.telegram = telegram;
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if ((other instanceof Payload) == false) {
+            return false;
+        }
+        Payload rhs = ((Payload) other);
+        return new EqualsBuilder().append(google, rhs.google).isEquals();
     }
 
 }

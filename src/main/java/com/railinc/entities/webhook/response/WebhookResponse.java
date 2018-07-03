@@ -1,35 +1,44 @@
 
 package com.railinc.entities.webhook.response;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "fulfillmentText",
-    "fulfillmentMessages",
-    "source",
-    "payload",
-    "outputContexts",
-    "followupEventInput"
-})
-public class WebhookResponse {
+public class WebhookResponse implements Serializable
+{
 
-    @JsonProperty("fulfillmentText")
+    @SerializedName("fulfillmentText")
+    @Expose
     private String fulfillmentText;
-    @JsonProperty("fulfillmentMessages")
-    private List<FulfillmentMessage> fulfillmentMessages = null;
-    @JsonProperty("source")
-    private String source = "java-webhook";
-    @JsonProperty("payload")
+    @SerializedName("fulfillmentMessages")
+    @Expose
+    private List<FulfillmentMessage> fulfillmentMessages = new ArrayList<FulfillmentMessage>();
+    @SerializedName("source")
+    @Expose
+    private String source;
+    @SerializedName("payload")
+    @Expose
     private Payload payload;
-    @JsonProperty("outputContexts")
-    private List<OutputContext> outputContexts = null;
-    @JsonProperty("followupEventInput")
+    @SerializedName("outputContexts")
+    @Expose
+    private List<OutputContext> outputContexts = new ArrayList<OutputContext>();
+    @SerializedName("followupEventInput")
+    @Expose
     private FollowupEventInput followupEventInput;
+    private final static long serialVersionUID = -6823870696331777593L;
+
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public WebhookResponse() {
+    }
     
     public WebhookResponse (String responseText) {
     	this.fulfillmentText = responseText;
@@ -43,64 +52,93 @@ public class WebhookResponse {
     	this.outputContexts.add(new OutputContext(session));
     }
 
-    @JsonProperty("fulfillmentText")
+    /**
+     * 
+     * @param followupEventInput
+     * @param outputContexts
+     * @param source
+     * @param payload
+     * @param fulfillmentText
+     * @param fulfillmentMessages
+     */
+    public WebhookResponse(String fulfillmentText, List<FulfillmentMessage> fulfillmentMessages, String source, Payload payload, List<OutputContext> outputContexts, FollowupEventInput followupEventInput) {
+        super();
+        this.fulfillmentText = fulfillmentText;
+        this.fulfillmentMessages = fulfillmentMessages;
+        this.source = source;
+        this.payload = payload;
+        this.outputContexts = outputContexts;
+        this.followupEventInput = followupEventInput;
+    }
+
     public String getFulfillmentText() {
         return fulfillmentText;
     }
 
-    @JsonProperty("fulfillmentText")
     public void setFulfillmentText(String fulfillmentText) {
         this.fulfillmentText = fulfillmentText;
     }
 
-    @JsonProperty("fulfillmentMessages")
     public List<FulfillmentMessage> getFulfillmentMessages() {
         return fulfillmentMessages;
     }
 
-    @JsonProperty("fulfillmentMessages")
     public void setFulfillmentMessages(List<FulfillmentMessage> fulfillmentMessages) {
         this.fulfillmentMessages = fulfillmentMessages;
     }
 
-    @JsonProperty("source")
     public String getSource() {
         return source;
     }
 
-    @JsonProperty("source")
     public void setSource(String source) {
         this.source = source;
     }
 
-    @JsonProperty("payload")
     public Payload getPayload() {
         return payload;
     }
 
-    @JsonProperty("payload")
     public void setPayload(Payload payload) {
         this.payload = payload;
     }
 
-    @JsonProperty("outputContexts")
     public List<OutputContext> getOutputContexts() {
         return outputContexts;
     }
 
-    @JsonProperty("outputContexts")
     public void setOutputContexts(List<OutputContext> outputContexts) {
         this.outputContexts = outputContexts;
     }
 
-    @JsonProperty("followupEventInput")
     public FollowupEventInput getFollowupEventInput() {
         return followupEventInput;
     }
 
-    @JsonProperty("followupEventInput")
     public void setFollowupEventInput(FollowupEventInput followupEventInput) {
         this.followupEventInput = followupEventInput;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("fulfillmentText", fulfillmentText).append("fulfillmentMessages", fulfillmentMessages).append("source", source).append("payload", payload).append("outputContexts", outputContexts).append("followupEventInput", followupEventInput).toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(followupEventInput).append(outputContexts).append(source).append(payload).append(fulfillmentText).append(fulfillmentMessages).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if ((other instanceof WebhookResponse) == false) {
+            return false;
+        }
+        WebhookResponse rhs = ((WebhookResponse) other);
+        return new EqualsBuilder().append(followupEventInput, rhs.followupEventInput).append(outputContexts, rhs.outputContexts).append(source, rhs.source).append(payload, rhs.payload).append(fulfillmentText, rhs.fulfillmentText).append(fulfillmentMessages, rhs.fulfillmentMessages).isEquals();
     }
 
 }

@@ -1,40 +1,78 @@
 
 package com.railinc.entities.webhook.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.io.Serializable;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "text",
-    "postback"
-})
-public class Button {
+public class Button implements Serializable
+{
 
-    @JsonProperty("text")
+    @SerializedName("text")
+    @Expose
     private String text;
-    @JsonProperty("postback")
+    @SerializedName("postback")
+    @Expose
     private String postback;
+    private final static long serialVersionUID = 2952038128706528274L;
 
-    @JsonProperty("text")
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public Button() {
+    }
+
+    /**
+     * 
+     * @param text
+     * @param postback
+     */
+    public Button(String text, String postback) {
+        super();
+        this.text = text;
+        this.postback = postback;
+    }
+
     public String getText() {
         return text;
     }
 
-    @JsonProperty("text")
     public void setText(String text) {
         this.text = text;
     }
 
-    @JsonProperty("postback")
     public String getPostback() {
         return postback;
     }
 
-    @JsonProperty("postback")
     public void setPostback(String postback) {
         this.postback = postback;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("text", text).append("postback", postback).toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(text).append(postback).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if ((other instanceof Button) == false) {
+            return false;
+        }
+        Button rhs = ((Button) other);
+        return new EqualsBuilder().append(text, rhs.text).append(postback, rhs.postback).isEquals();
     }
 
 }

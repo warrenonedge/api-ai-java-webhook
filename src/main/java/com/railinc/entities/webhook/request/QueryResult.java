@@ -1,132 +1,171 @@
 
 package com.railinc.entities.webhook.request;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "queryText",
-    "parameters",
-    "allRequiredParamsPresent",
-    "fulfillmentText",
-    "fulfillmentMessages",
-    "intent",
-    "intentDetectionConfidence",
-    "diagnosticInfo",
-    "languageCode"
-})
-public class QueryResult {
+public class QueryResult implements Serializable
+{
 
-    @JsonProperty("queryText")
+    @SerializedName("queryText")
+    @Expose
     private String queryText;
-    @JsonProperty("parameters")
+    @SerializedName("parameters")
+    @Expose
     private Parameters parameters;
-    @JsonProperty("allRequiredParamsPresent")
+    @SerializedName("allRequiredParamsPresent")
+    @Expose
     private Boolean allRequiredParamsPresent;
-    @JsonProperty("fulfillmentText")
+    @SerializedName("fulfillmentText")
+    @Expose
     private String fulfillmentText;
-    @JsonProperty("fulfillmentMessages")
-    private List<FulfillmentMessage> fulfillmentMessages = null;
-    @JsonProperty("intent")
+    @SerializedName("fulfillmentMessages")
+    @Expose
+    private List<FulfillmentMessage> fulfillmentMessages = new ArrayList<FulfillmentMessage>();
+    @SerializedName("intent")
+    @Expose
     private Intent intent;
-    @JsonProperty("intentDetectionConfidence")
+    @SerializedName("intentDetectionConfidence")
+    @Expose
     private Integer intentDetectionConfidence;
-    @JsonProperty("diagnosticInfo")
+    @SerializedName("diagnosticInfo")
+    @Expose
     private DiagnosticInfo diagnosticInfo;
-    @JsonProperty("languageCode")
+    @SerializedName("languageCode")
+    @Expose
     private String languageCode;
+    private final static long serialVersionUID = 2773173730625607953L;
 
-    @JsonProperty("queryText")
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public QueryResult() {
+    }
+
+    /**
+     * 
+     * @param languageCode
+     * @param intentDetectionConfidence
+     * @param allRequiredParamsPresent
+     * @param fulfillmentText
+     * @param parameters
+     * @param fulfillmentMessages
+     * @param queryText
+     * @param diagnosticInfo
+     * @param intent
+     */
+    public QueryResult(String queryText, Parameters parameters, Boolean allRequiredParamsPresent, String fulfillmentText, List<FulfillmentMessage> fulfillmentMessages, Intent intent, Integer intentDetectionConfidence, DiagnosticInfo diagnosticInfo, String languageCode) {
+        super();
+        this.queryText = queryText;
+        this.parameters = parameters;
+        this.allRequiredParamsPresent = allRequiredParamsPresent;
+        this.fulfillmentText = fulfillmentText;
+        this.fulfillmentMessages = fulfillmentMessages;
+        this.intent = intent;
+        this.intentDetectionConfidence = intentDetectionConfidence;
+        this.diagnosticInfo = diagnosticInfo;
+        this.languageCode = languageCode;
+    }
+
     public String getQueryText() {
         return queryText;
     }
 
-    @JsonProperty("queryText")
     public void setQueryText(String queryText) {
         this.queryText = queryText;
     }
 
-    @JsonProperty("parameters")
     public Parameters getParameters() {
         return parameters;
     }
 
-    @JsonProperty("parameters")
     public void setParameters(Parameters parameters) {
         this.parameters = parameters;
     }
 
-    @JsonProperty("allRequiredParamsPresent")
     public Boolean getAllRequiredParamsPresent() {
         return allRequiredParamsPresent;
     }
 
-    @JsonProperty("allRequiredParamsPresent")
     public void setAllRequiredParamsPresent(Boolean allRequiredParamsPresent) {
         this.allRequiredParamsPresent = allRequiredParamsPresent;
     }
 
-    @JsonProperty("fulfillmentText")
     public String getFulfillmentText() {
         return fulfillmentText;
     }
 
-    @JsonProperty("fulfillmentText")
     public void setFulfillmentText(String fulfillmentText) {
         this.fulfillmentText = fulfillmentText;
     }
 
-    @JsonProperty("fulfillmentMessages")
     public List<FulfillmentMessage> getFulfillmentMessages() {
         return fulfillmentMessages;
     }
 
-    @JsonProperty("fulfillmentMessages")
     public void setFulfillmentMessages(List<FulfillmentMessage> fulfillmentMessages) {
         this.fulfillmentMessages = fulfillmentMessages;
     }
 
-    @JsonProperty("intent")
     public Intent getIntent() {
         return intent;
     }
 
-    @JsonProperty("intent")
     public void setIntent(Intent intent) {
         this.intent = intent;
     }
 
-    @JsonProperty("intentDetectionConfidence")
     public Integer getIntentDetectionConfidence() {
         return intentDetectionConfidence;
     }
 
-    @JsonProperty("intentDetectionConfidence")
     public void setIntentDetectionConfidence(Integer intentDetectionConfidence) {
         this.intentDetectionConfidence = intentDetectionConfidence;
     }
 
-    @JsonProperty("diagnosticInfo")
     public DiagnosticInfo getDiagnosticInfo() {
         return diagnosticInfo;
     }
 
-    @JsonProperty("diagnosticInfo")
     public void setDiagnosticInfo(DiagnosticInfo diagnosticInfo) {
         this.diagnosticInfo = diagnosticInfo;
     }
 
-    @JsonProperty("languageCode")
     public String getLanguageCode() {
         return languageCode;
     }
 
-    @JsonProperty("languageCode")
     public void setLanguageCode(String languageCode) {
         this.languageCode = languageCode;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("queryText", queryText).append("parameters", parameters).append("allRequiredParamsPresent", allRequiredParamsPresent).append("fulfillmentText", fulfillmentText).append("fulfillmentMessages", fulfillmentMessages).append("intent", intent).append("intentDetectionConfidence", intentDetectionConfidence).append("diagnosticInfo", diagnosticInfo).append("languageCode", languageCode).toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(languageCode).append(intentDetectionConfidence).append(allRequiredParamsPresent).append(fulfillmentText).append(parameters).append(fulfillmentMessages).append(queryText).append(diagnosticInfo).append(intent).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if ((other instanceof QueryResult) == false) {
+            return false;
+        }
+        QueryResult rhs = ((QueryResult) other);
+        return new EqualsBuilder().append(languageCode, rhs.languageCode).append(intentDetectionConfidence, rhs.intentDetectionConfidence).append(allRequiredParamsPresent, rhs.allRequiredParamsPresent).append(fulfillmentText, rhs.fulfillmentText).append(parameters, rhs.parameters).append(fulfillmentMessages, rhs.fulfillmentMessages).append(queryText, rhs.queryText).append(diagnosticInfo, rhs.diagnosticInfo).append(intent, rhs.intent).isEquals();
     }
 
 }

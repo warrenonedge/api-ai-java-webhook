@@ -1,53 +1,91 @@
 
 package com.railinc.entities.webhook.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.io.Serializable;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "name",
-    "languageCode",
-    "parameters"
-})
-public class FollowupEventInput {
+public class FollowupEventInput implements Serializable
+{
 
-    @JsonProperty("name")
+    @SerializedName("name")
+    @Expose
     private String name;
-    @JsonProperty("languageCode")
+    @SerializedName("languageCode")
+    @Expose
     private String languageCode;
-    @JsonProperty("parameters")
+    @SerializedName("parameters")
+    @Expose
     private Parameters_ parameters;
+    private final static long serialVersionUID = -8146867033275283156L;
 
-    @JsonProperty("name")
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public FollowupEventInput() {
+    }
+
+    /**
+     * 
+     * @param languageCode
+     * @param name
+     * @param parameters
+     */
+    public FollowupEventInput(String name, String languageCode, Parameters_ parameters) {
+        super();
+        this.name = name;
+        this.languageCode = languageCode;
+        this.parameters = parameters;
+    }
+
     public String getName() {
         return name;
     }
 
-    @JsonProperty("name")
     public void setName(String name) {
         this.name = name;
     }
 
-    @JsonProperty("languageCode")
     public String getLanguageCode() {
         return languageCode;
     }
 
-    @JsonProperty("languageCode")
     public void setLanguageCode(String languageCode) {
         this.languageCode = languageCode;
     }
 
-    @JsonProperty("parameters")
     public Parameters_ getParameters() {
         return parameters;
     }
 
-    @JsonProperty("parameters")
     public void setParameters(Parameters_ parameters) {
         this.parameters = parameters;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("name", name).append("languageCode", languageCode).append("parameters", parameters).toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(languageCode).append(name).append(parameters).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if ((other instanceof FollowupEventInput) == false) {
+            return false;
+        }
+        FollowupEventInput rhs = ((FollowupEventInput) other);
+        return new EqualsBuilder().append(languageCode, rhs.languageCode).append(name, rhs.name).append(parameters, rhs.parameters).isEquals();
     }
 
 }

@@ -1,5 +1,5 @@
 
-package com.railinc.entities.webhook.response;
+package com.railinc.entities.webhook.request;
 
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
@@ -14,7 +14,7 @@ public class SimpleResponse implements Serializable
     @SerializedName("textToSpeech")
     @Expose
     private String textToSpeech;
-    private final static long serialVersionUID = 1881731508604396404L;
+    private final static long serialVersionUID = 8202726844853906884L;
 
     /**
      * No args constructor for use in serialization

@@ -1,53 +1,91 @@
 
 package com.railinc.entities.webhook.request;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.io.Serializable;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "oncall-entity",
-    "date",
-    "date-period"
-})
-public class Parameters {
+public class Parameters implements Serializable
+{
 
-    @JsonProperty("oncall-entity")
+    @SerializedName("oncall-entity")
+    @Expose
     private String oncallEntity;
-    @JsonProperty("date")
+    @SerializedName("date")
+    @Expose
     private String date;
-    @JsonProperty("date-period")
-    private String datePeriod;
+    @SerializedName("date-period")
+    @Expose
+    private Object datePeriod;
+    private final static long serialVersionUID = 8714187320645222051L;
 
-    @JsonProperty("oncall-entity")
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public Parameters() {
+    }
+
+    /**
+     * 
+     * @param date
+     * @param oncallEntity
+     * @param datePeriod
+     */
+    public Parameters(String oncallEntity, String date, Object datePeriod) {
+        super();
+        this.oncallEntity = oncallEntity;
+        this.date = date;
+        this.datePeriod = datePeriod;
+    }
+
     public String getOncallEntity() {
         return oncallEntity;
     }
 
-    @JsonProperty("oncall-entity")
     public void setOncallEntity(String oncallEntity) {
         this.oncallEntity = oncallEntity;
     }
 
-    @JsonProperty("date")
     public String getDate() {
         return date;
     }
 
-    @JsonProperty("date")
     public void setDate(String date) {
         this.date = date;
     }
 
-    @JsonProperty("date-period")
-    public String getDatePeriod() {
+    public Object getDatePeriod() {
         return datePeriod;
     }
 
-    @JsonProperty("date-period")
-    public void setDatePeriod(String datePeriod) {
+    public void setDatePeriod(Object datePeriod) {
         this.datePeriod = datePeriod;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("oncallEntity", oncallEntity).append("date", date).append("datePeriod", datePeriod).toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(date).append(oncallEntity).append(datePeriod).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if ((other instanceof Parameters) == false) {
+            return false;
+        }
+        Parameters rhs = ((Parameters) other);
+        return new EqualsBuilder().append(date, rhs.date).append(oncallEntity, rhs.oncallEntity).append(datePeriod, rhs.datePeriod).isEquals();
     }
 
 }

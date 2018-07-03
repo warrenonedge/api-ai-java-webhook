@@ -1,27 +1,65 @@
 
 package com.railinc.entities.webhook.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.io.Serializable;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "card"
-})
-public class FulfillmentMessage {
+public class FulfillmentMessage implements Serializable
+{
 
-    @JsonProperty("card")
+    @SerializedName("card")
+    @Expose
     private Card card;
+    private final static long serialVersionUID = -945440088791924039L;
 
-    @JsonProperty("card")
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public FulfillmentMessage() {
+    }
+
+    /**
+     * 
+     * @param card
+     */
+    public FulfillmentMessage(Card card) {
+        super();
+        this.card = card;
+    }
+
     public Card getCard() {
         return card;
     }
 
-    @JsonProperty("card")
     public void setCard(Card card) {
         this.card = card;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("card", card).toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(card).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if ((other instanceof FulfillmentMessage) == false) {
+            return false;
+        }
+        FulfillmentMessage rhs = ((FulfillmentMessage) other);
+        return new EqualsBuilder().append(card, rhs.card).isEquals();
     }
 
 }

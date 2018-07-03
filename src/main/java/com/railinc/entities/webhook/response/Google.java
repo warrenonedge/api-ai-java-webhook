@@ -1,44 +1,79 @@
 
 package com.railinc.entities.webhook.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.io.Serializable;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "expectUserResponse",
-    "richResponse"
-})
-public class Google {
+public class Google implements Serializable
+{
 
-    @JsonProperty("expectUserResponse")
+    @SerializedName("expectUserResponse")
+    @Expose
     private Boolean expectUserResponse;
-    @JsonProperty("richResponse")
+    @SerializedName("richResponse")
+    @Expose
     private RichResponse richResponse;
-    
+    private final static long serialVersionUID = -1144275712127563970L;
+
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
     public Google() {
     	this.richResponse = new RichResponse();
     }
 
-    @JsonProperty("expectUserResponse")
+    /**
+     * 
+     * @param richResponse
+     * @param expectUserResponse
+     */
+    public Google(Boolean expectUserResponse, RichResponse richResponse) {
+        super();
+        this.expectUserResponse = expectUserResponse;
+        this.richResponse = richResponse;
+    }
+
     public Boolean getExpectUserResponse() {
         return expectUserResponse;
     }
 
-    @JsonProperty("expectUserResponse")
     public void setExpectUserResponse(Boolean expectUserResponse) {
         this.expectUserResponse = expectUserResponse;
     }
 
-    @JsonProperty("richResponse")
     public RichResponse getRichResponse() {
         return richResponse;
     }
 
-    @JsonProperty("richResponse")
     public void setRichResponse(RichResponse richResponse) {
         this.richResponse = richResponse;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("expectUserResponse", expectUserResponse).append("richResponse", richResponse).toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(richResponse).append(expectUserResponse).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if ((other instanceof Google) == false) {
+            return false;
+        }
+        Google rhs = ((Google) other);
+        return new EqualsBuilder().append(richResponse, rhs.richResponse).append(expectUserResponse, rhs.expectUserResponse).isEquals();
     }
 
 }

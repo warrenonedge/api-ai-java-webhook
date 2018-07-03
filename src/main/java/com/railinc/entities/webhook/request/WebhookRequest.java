@@ -1,66 +1,104 @@
 
 package com.railinc.entities.webhook.request;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.io.Serializable;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "responseId",
-    "queryResult",
-    "originalDetectIntentRequest",
-    "session"
-})
-public class WebhookRequest {
+public class WebhookRequest implements Serializable
+{
 
-    @JsonProperty("responseId")
+    @SerializedName("responseId")
+    @Expose
     private String responseId;
-    @JsonProperty("queryResult")
+    @SerializedName("queryResult")
+    @Expose
     private QueryResult queryResult;
-    @JsonProperty("originalDetectIntentRequest")
+    @SerializedName("originalDetectIntentRequest")
+    @Expose
     private OriginalDetectIntentRequest originalDetectIntentRequest;
-    @JsonProperty("session")
+    @SerializedName("session")
+    @Expose
     private String session;
+    private final static long serialVersionUID = -8470581524189562785L;
 
-    @JsonProperty("responseId")
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public WebhookRequest() {
+    }
+
+    /**
+     * 
+     * @param responseId
+     * @param session
+     * @param queryResult
+     * @param originalDetectIntentRequest
+     */
+    public WebhookRequest(String responseId, QueryResult queryResult, OriginalDetectIntentRequest originalDetectIntentRequest, String session) {
+        super();
+        this.responseId = responseId;
+        this.queryResult = queryResult;
+        this.originalDetectIntentRequest = originalDetectIntentRequest;
+        this.session = session;
+    }
+
     public String getResponseId() {
         return responseId;
     }
 
-    @JsonProperty("responseId")
     public void setResponseId(String responseId) {
         this.responseId = responseId;
     }
 
-    @JsonProperty("queryResult")
     public QueryResult getQueryResult() {
         return queryResult;
     }
 
-    @JsonProperty("queryResult")
     public void setQueryResult(QueryResult queryResult) {
         this.queryResult = queryResult;
     }
 
-    @JsonProperty("originalDetectIntentRequest")
     public OriginalDetectIntentRequest getOriginalDetectIntentRequest() {
         return originalDetectIntentRequest;
     }
 
-    @JsonProperty("originalDetectIntentRequest")
     public void setOriginalDetectIntentRequest(OriginalDetectIntentRequest originalDetectIntentRequest) {
         this.originalDetectIntentRequest = originalDetectIntentRequest;
     }
 
-    @JsonProperty("session")
     public String getSession() {
         return session;
     }
 
-    @JsonProperty("session")
     public void setSession(String session) {
         this.session = session;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("responseId", responseId).append("queryResult", queryResult).append("originalDetectIntentRequest", originalDetectIntentRequest).append("session", session).toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(responseId).append(session).append(queryResult).append(originalDetectIntentRequest).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if ((other instanceof WebhookRequest) == false) {
+            return false;
+        }
+        WebhookRequest rhs = ((WebhookRequest) other);
+        return new EqualsBuilder().append(responseId, rhs.responseId).append(session, rhs.session).append(queryResult, rhs.queryResult).append(originalDetectIntentRequest, rhs.originalDetectIntentRequest).isEquals();
     }
 
 }
