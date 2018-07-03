@@ -33,7 +33,7 @@ public class QueryResult implements Serializable
     private Intent intent;
     @SerializedName("intentDetectionConfidence")
     @Expose
-    private Integer intentDetectionConfidence;
+    private double intentDetectionConfidence;
     @SerializedName("diagnosticInfo")
     @Expose
     private DiagnosticInfo diagnosticInfo;
@@ -122,11 +122,11 @@ public class QueryResult implements Serializable
         this.intent = intent;
     }
 
-    public Integer getIntentDetectionConfidence() {
+    public double getIntentDetectionConfidence() {
         return intentDetectionConfidence;
     }
 
-    public void setIntentDetectionConfidence(Integer intentDetectionConfidence) {
+    public void setIntentDetectionConfidence(double intentDetectionConfidence) {
         this.intentDetectionConfidence = intentDetectionConfidence;
     }
 

@@ -42,6 +42,7 @@ public class RailIncOnCallController {
     	String resultText = "";
     	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     	DateFormat readableDf = new SimpleDateFormat("MMMM d");
+    	Date todaysDate = new Date();
        
         Parameters params = whr.getQueryResult().getParameters();
         System.out.println(params);
@@ -75,18 +76,18 @@ public class RailIncOnCallController {
 	        Calendar iso8601Date = DatatypeConverter.parseDateTime(params.getDate());
 	       
 	        Date result =  iso8601Date.getTime();
+	        String tense = (result.after(todaysDate)) ? " is " : " was ";
 	        try {
     	        OnCall onCall = onCallService.findByOnCallDate(df.format(result)).get(0);
-    	        resultText = "The User on Call for " + readableDf.format(result) + " is " + onCall.getName();
+    	        resultText = "The User on Call for " + readableDf.format(result) + tense + onCall.getName();
         	} catch (IndexOutOfBoundsException ex) {
         		resultText = "There is No User on Call";
         	}
         }
         else {
-        	Date result =  new Date();
         	try {
-    	        OnCall onCall = onCallService.findByOnCallDate(df.format(result)).get(0);
-    	        resultText = "The User on Call for " + readableDf.format(result) + " is " + onCall.getName();
+    	        OnCall onCall = onCallService.findByOnCallDate(df.format(todaysDate)).get(0);
+    	        resultText = "The User on Call for " + readableDf.format(todaysDate) + " is " + onCall.getName();
         	} catch (IndexOutOfBoundsException ex) {
         		resultText = "There is No User on Call";
         	}
