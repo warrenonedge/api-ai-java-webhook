@@ -68,7 +68,7 @@ public class RailIncOnCallController {
 	        resultText = (allOnCall.size() > 0) ? "Users on call:" : "";
 	        
 	        for (OnCall onCall : allOnCall) {
-	        	resultText += "\n" + onCall.getName() + "\t " + readableDf.format(df.parse(onCall.getOnCallDate()));
+	        	resultText += "\n" + onCall.getName() + "\t " + readableDf.format(df.parse(onCall.getOnCallDate())) + getDateSuffix(todaysDate.getDay());
 	        }
 
         }
@@ -79,7 +79,7 @@ public class RailIncOnCallController {
 	        String tense = (result.after(todaysDate)) ? " is " : " was ";
 	        try {
     	        OnCall onCall = onCallService.findByOnCallDate(df.format(result)).get(0);
-    	        resultText = "The User on Call for " + readableDf.format(result) + tense + onCall.getName();
+    	        resultText = "The User on Call for " + readableDf.format(result) + getDateSuffix(todaysDate.getDay()) + tense + onCall.getName();
         	} catch (IndexOutOfBoundsException ex) {
         		resultText = "There is No User on Call";
         	}
@@ -87,7 +87,7 @@ public class RailIncOnCallController {
         else {
         	try {
     	        OnCall onCall = onCallService.findByOnCallDate(df.format(todaysDate)).get(0);
-    	        resultText = "The User on Call for " + readableDf.format(todaysDate) + " is " + onCall.getName();
+    	        resultText = "The User on Call for " + readableDf.format(todaysDate) + getDateSuffix(todaysDate.getDay()) + " is " + onCall.getName();
         	} catch (IndexOutOfBoundsException ex) {
         		resultText = "There is No User on Call";
         	}
@@ -95,4 +95,21 @@ public class RailIncOnCallController {
 
         return new WebhookResponse(resultText);
     }
+    
+    
+    public String getDateSuffix( int day) { 
+        switch (day) {
+            case 1: case 21: case 31:
+                   return ("st");
+
+            case 2: case 22: 
+                   return ("nd");
+
+            case 3: case 23:
+                   return ("rd");
+
+            default:
+                   return ("th");
+        }
+}
 }
