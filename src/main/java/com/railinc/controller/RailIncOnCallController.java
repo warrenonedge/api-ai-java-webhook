@@ -40,9 +40,8 @@ public class RailIncOnCallController {
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody WebhookResponse webhook(@RequestBody WebhookRequest whr) throws Exception{
     	String resultText = "";
-    	String resultSound = "";
     	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-    	DateFormat readableDf = new SimpleDateFormat("MMMM dd");
+    	DateFormat readableDf = new SimpleDateFormat("MMMM d");
        
         Parameters params = whr.getQueryResult().getParameters();
         System.out.println(params);
@@ -65,12 +64,10 @@ public class RailIncOnCallController {
 
 	        System.out.println("Len: " + allOnCall.size());
 	        
-	        resultText = (allOnCall.size() > 0) ? "Users on call:" : "No Users on Call";
-	        resultSound = (allOnCall.size() > 0) ? "Users on call:" : "No Users on Call";
+	        resultText = (allOnCall.size() > 0) ? "Users on call:" : "";
 	        
 	        for (OnCall onCall : allOnCall) {
-	        	resultText += "\n> " + onCall.getName() + "\t " + onCall.getOnCallDate();
-	        	resultSound += "\n" + onCall.getName();
+	        	resultText += "\n" + onCall.getName() + "\t " + readableDf.format(df.parse(onCall.getOnCallDate()));
 	        }
 
         }
@@ -95,6 +92,6 @@ public class RailIncOnCallController {
         	}
         }
 
-        return new WebhookResponse(resultText, (resultSound.equals("")) ? resultText : resultSound);
+        return new WebhookResponse(resultText);
     }
 }
